@@ -2,7 +2,38 @@ const express = require("express");
 const router = express.Router();
 const Book = require("../models/book.schema");
 
-// Add contact to mongoDB
+// Get all books from mongodb
+router.get("/", async (req, res) => {
+  try {
+    Book.find()
+      .then((Book) => {
+        res.status(200).json(Book);
+      })
+      .catch((error) => {
+        res.status(500).json({ msg: "Failed to fetch Books" });
+      });
+  } catch (error) {
+    res.status(500).json({ msg: "Failed to fetch Books from Database" });
+  }
+});
+// Get book by id
+router.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    Book.findById(id)
+      .then((Book) => {
+        res.status(200).json(Book);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json({ msg: "Unable to get Book. Check Id" });
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "Unable to get Book" });
+  }
+});
+// Add Book to mongoDB
 router.post("/book", async (req, res) => {
   try {
     const newBook = new Book(req.body);

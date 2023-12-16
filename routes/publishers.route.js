@@ -82,26 +82,26 @@ router.put("/:id", async (req, res) => {
   }
 });
 // Delete Publisher by Id
-router.delete("/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const deletedPublisher = req.body;
-    await Publisher.findOneAndDelete({ _id: id }, deletedPublisher, {
-      new: true,
-    })
-      .then((deletedPublisher) => {
-        console.log(deletedPublisher);
-        res.status(200).json({
-          msg: "Publisher deleted successfully",
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(500).json({ msg: "Delete Publisher failed" });
-      });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: "Unable to delete Publisher" });
-  }
-});
+// router.delete("/:id", async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     const deletedPublisher = req.body;
+//     await Publisher.findOneAndDelete({ _id: id }, deletedPublisher, {
+//       new: true,
+//     })
+//       .then((deletedPublisher) => {
+//         console.log(deletedPublisher);
+//         res.status(200).json({
+//           msg: "Publisher deleted successfully",
+//         });
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         res.status(500).json({ msg: "Delete Publisher failed" });
+//       });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ msg: "Unable to delete Publisher" });
+//   }
+// });
 module.exports = router;
