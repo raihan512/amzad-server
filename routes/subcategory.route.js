@@ -27,4 +27,17 @@ router.get("/:id", async (req, res) => {
     res.json(error);
   }
 });
+// Get selected sub category
+router.post("/selectedsubcategory", async (req, res) => {
+  try {
+    const keys = req.body;
+    const subCategory = await SubCategory.find({
+      subCategoryId: { $in: keys },
+    });
+    res.status(200).json(subCategory);
+  } catch (error) {
+    console.error("Error loading writers:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 module.exports = router;

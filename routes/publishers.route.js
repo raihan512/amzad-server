@@ -104,4 +104,17 @@ router.put("/:id", async (req, res) => {
 //     res.status(500).json({ msg: "Unable to delete Publisher" });
 //   }
 // });
+
+// Get selected publishers
+// Get selected category
+router.post("/selectedpublisher", async (req, res) => {
+  try {
+    const keys = req.body;
+    const publisher = await Publisher.find({ publisherId: { $in: keys } });
+    res.status(200).json(publisher);
+  } catch (error) {
+    console.error("Error loading writers:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 module.exports = router;

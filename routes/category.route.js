@@ -29,5 +29,15 @@ router.get("/:id", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
+// Get selected category
+router.post("/selectedcategory", async (req, res) => {
+  try {
+    const keys = req.body;
+    const category = await Category.find({ categoryId: { $in: keys } });
+    res.status(200).json(category);
+  } catch (error) {
+    console.error("Error loading writers:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 module.exports = router;
