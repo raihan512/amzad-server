@@ -56,5 +56,17 @@ router.post("/book", async (req, res) => {
     res.status(500).json({ msg: "Unable to save" });
   }
 });
-
+// Get books by writer
+router.post("/writerbooks", async (req, res) => {
+  try {
+    const keys = req.body;
+    const book = await Book.find({
+      writer: { $in: keys },
+    });
+    res.status(200).json(book);
+  } catch (error) {
+    console.error("Error loading writers:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 module.exports = router;

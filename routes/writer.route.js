@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 // Get writer by search writer id
 router.get("/:id", async (req, res) => {
   try {
-    const writer = await Writer.find({ wirterId: req.params.id });
+    const writer = await Writer.find({ writerId: req.params.id });
     res.status(200).json(writer);
   } catch (error) {
     console.error(error);
