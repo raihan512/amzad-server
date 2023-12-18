@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to Maktabatul Amzad Server");
 });
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri =
   "mongodb+srv://amzad2023:Raihan1234@maktabatul-amzad.vgl3kbg.mongodb.net/?retryWrites=true&w=majority";
 
@@ -39,10 +39,21 @@ async function run() {
       const allBooks = await books.find().toArray();
       res.status(200).json(allBooks);
     });
+    // ---------- Get book by id
+    app.get("/api/books/:id", async (req, res) => {
+      const query = { _id: new ObjectId(req.params.id) };
+      const book = await books.findOne(query);
+      res.status(200).json(book);
+    });
     // ----------------------------------------------------------Writer Route----------------------------------------------------------
     app.get("/api/writers", async (req, res) => {
       const allWriters = await writers.find().toArray();
       res.status(200).json(allWriters);
+    });
+    // ---------- Get writer by writerId
+    app.get("/api/writers/:writerId", async (req, res) => {
+      const writer = await writers.findOne({ writerId: req.params.writerId });
+      res.status(200).json(writer);
     });
     // ----------------------------------------------------------Editor Route----------------------------------------------------------
     app.get("/api/editors", async (req, res) => {
@@ -59,10 +70,24 @@ async function run() {
       const allCategories = await categories.find().toArray();
       res.status(200).json(allCategories);
     });
+    // ---------- Get category by categoryId
+    app.get("/api/categories/:categoryId", async (req, res) => {
+      const category = await categories.findOne({
+        categoryId: req.params.categoryId,
+      });
+      res.status(200).json(category);
+    });
     // ----------------------------------------------------------Sub Category Route----------------------------------------------------------
     app.get("/api/subcategories", async (req, res) => {
       const allSubCategories = await subcategories.find().toArray();
       res.status(200).json(allSubCategories);
+    });
+    // ---------- Get sub category by subCategoryId
+    app.get("/api/subcategories/:subCategoryId", async (req, res) => {
+      const subCategory = await subcategories.findOne({
+        subCategoryId: req.params.subCategoryId,
+      });
+      res.status(200).json(subCategory);
     });
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
