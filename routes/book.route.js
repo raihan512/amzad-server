@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Book = require("../models/book.schema");
+const { json } = require("body-parser");
 
 // Get all books from mongodb
 router.get("/", async (req, res) => {
@@ -62,6 +63,32 @@ router.post("/writerbooks", async (req, res) => {
     const keys = req.body;
     const book = await Book.find({
       writer: { $in: keys },
+    });
+    res.status(200).json(book);
+  } catch (error) {
+    console.error("Error loading writers:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+// Load books by Category
+router.post("/category", async (req, res) => {
+  try {
+    const query = req.body;
+    const book = await Book.find({
+      category: { $in: query },
+    });
+    res.status(200).json(book);
+  } catch (error) {
+    console.error("Error loading writers:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+// Load books by subCategory
+router.post("/subcategory", async (req, res) => {
+  try {
+    const query = req.body;
+    const book = await Book.find({
+      subCategory: { $in: query },
     });
     res.status(200).json(book);
   } catch (error) {
