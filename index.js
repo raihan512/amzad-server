@@ -28,13 +28,42 @@ async function run() {
   try {
     const database = client.db("maktabatul-amzad");
     const books = database.collection("books");
+    const writers = database.collection("writers");
+    const editors = database.collection("editors");
+    const publishers = database.collection("publishers");
+    const categories = database.collection("categories");
+    const subcategories = database.collection("subcategories");
 
     // ----------------------------------------------------------Book Route----------------------------------------------------------
-    app.get("/api/book", async (req, res) => {
+    app.get("/api/books", async (req, res) => {
       const allBooks = await books.find().toArray();
       res.status(200).json(allBooks);
     });
-
+    // ----------------------------------------------------------Writer Route----------------------------------------------------------
+    app.get("/api/writers", async (req, res) => {
+      const allWriters = await writers.find().toArray();
+      res.status(200).json(allWriters);
+    });
+    // ----------------------------------------------------------Editor Route----------------------------------------------------------
+    app.get("/api/editors", async (req, res) => {
+      const allEditors = await editors.find().toArray();
+      res.status(200).json(allEditors);
+    });
+    // ----------------------------------------------------------Publisher Route----------------------------------------------------------
+    app.get("/api/publishers", async (req, res) => {
+      const allPublishers = await publishers.find().toArray();
+      res.status(200).json(allPublishers);
+    });
+    // ----------------------------------------------------------Category Route----------------------------------------------------------
+    app.get("/api/categories", async (req, res) => {
+      const allCategories = await categories.find().toArray();
+      res.status(200).json(allCategories);
+    });
+    // ----------------------------------------------------------Sub Category Route----------------------------------------------------------
+    app.get("/api/subcategories", async (req, res) => {
+      const allSubCategories = await subcategories.find().toArray();
+      res.status(200).json(allSubCategories);
+    });
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
